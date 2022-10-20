@@ -1,4 +1,3 @@
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 
@@ -9,15 +8,17 @@ public class Calendar {
 
     static void getWeek(){
         int weekOfYear = now.get(WeekFields.ISO.weekOfYear());
-        System.out.println(weekOfYear);
+        System.out.println("The week nr is: " + weekOfYear);
     }
     static void printDays(){
-    for(int i=1;i <=7;i++){
-        if( now.getDayOfWeek() == DayOfWeek.of(i)){
-            System.out.println(ANSI_RED + DayOfWeek.of(i)+ ANSI_RESET);
-        } else {
-            System.out.println(DayOfWeek.of(i));
-        }
+        int current_day = now.getDayOfWeek().getValue();
+        LocalDateTime startMonday = now.minusDays(current_day-1);
+    for(int i=0;i <=6;i++){
+        if( i == current_day-1){
+            System.out.println(ANSI_RED + startMonday.plusDays(i).getDayOfWeek() + " " + startMonday.plusDays(i).getDayOfMonth()+"/"+startMonday.plusDays(i).getMonthValue() + ANSI_RESET);
+       } else {
+            System.out.println(startMonday.plusDays(i).getDayOfWeek() + " " + startMonday.plusDays(i).getDayOfMonth()+"/"+startMonday.plusDays(i).getMonthValue());
+       }
     }
 
 
