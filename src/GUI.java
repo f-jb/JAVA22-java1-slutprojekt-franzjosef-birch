@@ -1,3 +1,5 @@
+import net.fortuna.ical4j.model.Calendar;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -83,17 +85,27 @@ public class GUI {
 //            setLayout(new GridBagLayout());
             super.setLayout(new GridBagLayout());
             GridBagConstraints dayContainerConstraints = new GridBagConstraints();
+
+
+
+
+
+
+
+
+
+
+
             listModel = new DefaultListModel();
             noteList = new JList<>(listModel);
+            EventRenderer eventRenderer = new EventRenderer();
+            noteList.setCellRenderer(eventRenderer);
             noteList.setVisibleRowCount(JList.VERTICAL);
             noteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listSelectionModel = noteList.getSelectionModel();
 //                noteList.addListSelectionListener();
 //                listSelectionModel.addListSelectionListener(checkIfListEmpty);
             JScrollPane noteListScrollPane = new JScrollPane(noteList);
-            for (int i = 0; i < 20; i++) {
-                listModel.addElement("<html><body style=\"width: 120px\">test see if this actually wordwraps or not, dunno</html>");
-            }
 
 
             // set the element behaviour within the container
@@ -146,13 +158,13 @@ public class GUI {
         ActionListener addNoteListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addNote();
+                addEvent();
             }
         };
         ActionListener deleteNoteListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addNote();
+                addEvent();
             }
         };
         ListSelectionListener checkIfListEmpty = new ListSelectionListener() {
@@ -173,13 +185,15 @@ public class GUI {
 
 
 
-        void addNote() {
+        void addEvent() {
             String userNote = writeNote();
             if (userNote == null) {
                 return;
             }
+            Event.create(WeekCalendar.getCurrentCalendar(),userNote);
             // TODO: Figure out some kind of dynamic scaling for the width of the cells.
-            listModel.addElement("<html><body style=\"width: 80px\">" + userNote + "</html>");
+            listModel.addElement(Event.createEvent(userNote));
+//            listModel.addElement("<html><body style=\"width: 80px\">" + WeekCalendar.getCurrentCalendar().getComponents() + "</html>");
 //            JLabel note = new JLabel("<html><p>" + userNote + "</p></html>");
 //            noteContainer.add(note);
             //           noteContainer.add(Box.createRigidArea(new Dimension(0, 5)));

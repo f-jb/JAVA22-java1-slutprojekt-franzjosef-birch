@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3ee62b48-ccc2-4a3d-8a20-97607b137b8c" name="Changes" comment="Critera for G met.">
+    <list default="true" id="3ee62b48-ccc2-4a3d-8a20-97607b137b8c" name="Changes" comment="jlist added.">
+      <change afterPath="$PROJECT_DIR$/LICENSE.ical4j.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Event.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EventRenderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/FileHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kalender.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Kalender.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Calendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WeekCalendar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WeekCalendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WeekCalendar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666353448007</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="jlist added.">
+      <created>1666535245967</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1666535245967</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -117,6 +127,22 @@
     <MESSAGE value="It now creates objects for each weekday, it now correctly shows the dates around the end of months." />
     <MESSAGE value="Mock GUI: Shows week and weekdays." />
     <MESSAGE value="Critera for G met." />
-    <option name="LAST_COMMIT_MESSAGE" value="Critera for G met." />
+    <MESSAGE value="jlist added." />
+    <option name="LAST_COMMIT_MESSAGE" value="jlist added." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/WeekCalendar.java</url>
+          <line>23</line>
+          <properties class="WeekCalendar" method="getNow">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

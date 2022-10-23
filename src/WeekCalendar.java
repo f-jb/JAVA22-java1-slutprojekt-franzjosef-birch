@@ -1,9 +1,26 @@
+import net.fortuna.ical4j.model.*;
+import net.fortuna.ical4j.model.property.*;
+
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 
 public class WeekCalendar {
-    static LocalDateTime[] week = new LocalDateTime[7];
-    static final LocalDateTime now = LocalDateTime.now();
+    private static final LocalDateTime[] week = new LocalDateTime[7];
+    private static final LocalDateTime now = LocalDateTime.now();
+    private static Calendar currentCalendar = createCalendar();
+    static Calendar createCalendar(){
+        Calendar calendar = new Calendar();
+        calendar.getProperties().add(new ProdId("-//FJ Birch//GritCalendar//EN"));
+        calendar.getProperties().add(Version.VERSION_2_0);
+        calendar.getProperties().add(CalScale.GREGORIAN);
+        return calendar;
+    }
+    static Calendar getCurrentCalendar(){
+        return currentCalendar;
+    }
+    static void exportCalender(Calendar calendar){
+        FileHandler.export(calendar);
+    }
     static LocalDateTime getNow(){
         return now;
     }
