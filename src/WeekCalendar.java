@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 
-public class Calendar {
+public class WeekCalendar {
     static LocalDateTime[] week = new LocalDateTime[7];
     static final LocalDateTime now = LocalDateTime.now();
     static LocalDateTime getNow(){
@@ -9,7 +9,10 @@ public class Calendar {
     }
 
     static String getWeek() {
+        // För lite intressant läsning av skillnaden mellan WeekFields och ChronoField för att få veckonummer:
+        // https://webstep.se/nyheter--blogginlagg/blogginlagg/2022-05-27-weekfields-to-the-rescue
         int weekOfYear = now.get(WeekFields.ISO.weekOfYear());
+//        int weekOfYear1 = now.get(ChronoField.ALIGNED_WEEK_OF_YEAR);
         return java.lang.String.valueOf(weekOfYear);
     }
 
