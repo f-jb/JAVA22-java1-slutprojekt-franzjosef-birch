@@ -41,8 +41,5 @@ public class WeekCalendar {
             week[i] = startMonday.plusDays(i);
         }
         return week;
-
-
     }
-
 }
