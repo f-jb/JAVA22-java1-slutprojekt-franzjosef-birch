@@ -74,7 +74,6 @@ class Event {
             UidGenerator ug = new RandomUidGenerator();
             Uid uid = ug.generateUid();
             meeting.getProperties().add(uid);
-            System.out.println(meeting.getProperties());
             WeekCalendar.getCurrentCalendar().getComponents().add(meeting);
         }
     }

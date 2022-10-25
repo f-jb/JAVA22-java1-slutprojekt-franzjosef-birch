@@ -1,6 +1,7 @@
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.property.*;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 
@@ -18,8 +19,8 @@ public class WeekCalendar {
     static Calendar getCurrentCalendar(){
         return currentCalendar;
     }
-    static void exportCalender(Calendar calendar){
-        FileHandler.export(calendar);
+    static void exportCalendar(File filePath){
+        FileHandler.export(getCurrentCalendar(), filePath);
     }
     static LocalDateTime getNow(){
         return now;
@@ -29,7 +30,6 @@ public class WeekCalendar {
         // För lite intressant läsning av skillnaden mellan WeekFields och ChronoField för att få veckonummer:
         // https://webstep.se/nyheter--blogginlagg/blogginlagg/2022-05-27-weekfields-to-the-rescue
         int weekOfYear = now.get(WeekFields.ISO.weekOfYear());
-//        int weekOfYear1 = now.get(ChronoField.ALIGNED_WEEK_OF_YEAR);
         return java.lang.String.valueOf(weekOfYear);
     }
 

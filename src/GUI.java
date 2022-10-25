@@ -16,11 +16,33 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 public class GUI {
+    static void choosePathAndExport(JFrame frame) {
+        final JFileChooser fileChooser = new JFileChooser();
+        int returnVal = fileChooser.showSaveDialog(frame);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            WeekCalendar.exportCalendar(fileChooser.getSelectedFile());
+        }
+    }
 
     static void createAndShowGUI() {
         JFrame frame = new JFrame("Calendar");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(1280, 720));
+
+        JMenuBar menuBar;
+        JMenuItem exportCalendar;
+        exportCalendar = new JMenuItem("Export Calendar");
+        menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Import and export");
+        menu.add("Import Calendar(TBD)");
+        menu.add(exportCalendar);
+        menuBar.add(menu);
+        frame.setJMenuBar(menuBar);
+
+        exportCalendar.addActionListener(e -> choosePathAndExport(frame));
+
+
+
 
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
@@ -66,12 +88,9 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Event.DateBuilder startBuild = new Event.DateBuilder(localDateTime);
-                System.out.println("Settting hours to " + getHours());
                 startBuild.setHour(getHours());
-                System.out.println("Setting minutes to " + getMinutes());
                 startBuild.setMinute(getMinutes());
                 DateTime startTime = startBuild.build();
-                System.out.println(startTime.toString());
 
 
                 Event.EventBuilder eventBuild = new Event.EventBuilder();
@@ -80,7 +99,6 @@ public class GUI {
                 eventBuild.setEndTime(startTime);
                 eventBuild.setCalendar(WeekCalendar.getCurrentCalendar());
                 eventBuild.buildEvent();
-                System.out.println(WeekCalendar.getCurrentCalendar().getComponents());
                 frame.dispose();
             }
         };
