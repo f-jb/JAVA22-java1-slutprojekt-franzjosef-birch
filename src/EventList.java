@@ -1,4 +1,3 @@
-import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VEvent;
 
@@ -8,8 +7,8 @@ import java.awt.*;
 import java.time.LocalDateTime;
 
 public class EventList extends JPanel {
-    private JList eventList;
-    private DefaultListModel listModel = new DefaultListModel();
+    private final JList eventList;
+    private final DefaultListModel listModel = new DefaultListModel();
     int getSelectedIndex(){
         return eventList.getSelectedIndex();
     }
@@ -39,8 +38,6 @@ public class EventList extends JPanel {
         eventListConstraints.weighty = 1.0;
         eventListConstraints.weightx = 1.0;
 
-//        ListSelectionModel listSelectionModel;
- //       listSelectionModel = eventList.getSelectionModel();
 
         EventRenderer eventRenderer = new EventRenderer();
 
@@ -61,33 +58,15 @@ public class EventList extends JPanel {
                 listModel.addElement(event);
             }
         }
-
-
     }
     void setEventListListener(ListSelectionListener listListener){
         eventList.addListSelectionListener(listListener);
 
     }
 
-    String writeNote() {
-        return JOptionPane.showInputDialog(null, null, "Enter note");
-    }
-
     void deleteEvent(Property uidToDelete) {
             Event.deleteByUid(WeekCalendar.getCurrentCalendar(), uidToDelete);
 
-    }
-
-    void addEvent(LocalDateTime localDateTime) {
-        VEvent event;
-        DateTime start = new Event.DateBuilder(localDateTime).build();
-
-        String userNote = writeNote();
-        if (userNote == null) {
-            return;
-        }
-//        WeekCalendar.getCurrentCalendar().getComponents().add(event);
-      //  Event.create(WeekCalendar.getCurrentCalendar(), userNote);
     }
 
     public void setSelectedIndex(int index) {

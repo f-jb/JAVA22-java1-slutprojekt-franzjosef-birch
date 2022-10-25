@@ -7,7 +7,7 @@ import java.time.temporal.WeekFields;
 public class WeekCalendar {
     private static final LocalDateTime[] week = new LocalDateTime[7];
     private static final LocalDateTime now = LocalDateTime.now();
-    private static Calendar currentCalendar = createCalendar();
+    private static final Calendar currentCalendar = createCalendar();
     static Calendar createCalendar(){
         Calendar calendar = new Calendar();
         calendar.getProperties().add(new ProdId("-//FJ Birch//GritCalendar//EN"));

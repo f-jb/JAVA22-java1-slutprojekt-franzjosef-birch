@@ -9,6 +9,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
@@ -47,116 +49,149 @@ public class GUI {
         frame.setVisible(true);
     }
 
-    static void createAndAskEvent(LocalDateTime localDateTime) {
-        JFrame frame = new JFrame("Event Creation");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(600, 400));
+    static class CreateAndAskEvent extends JFrame {
 
-        String summary;
+        TextArea summaryArea;
         JSpinner hoursSpinner;
         JSpinner minutesSpinner;
-
-        JPanel container = new JPanel();
-        container.setLayout(new GridBagLayout());
-        GridBagConstraints eventCreationConstraints = new GridBagConstraints();
-        eventCreationConstraints.fill = GridBagConstraints.NONE;
-        eventCreationConstraints.gridx = 0;
-        eventCreationConstraints.gridy = 0;
-        eventCreationConstraints.weighty = 0;
-        eventCreationConstraints.weightx = 0;
-
-        JPanel hoursContainer = new JPanel();
-        hoursContainer.setLayout(new BoxLayout(hoursContainer, BoxLayout.PAGE_AXIS));
-
-        JLabel hoursLabel = new JLabel("<html><h2>Hours</h2></html>");
-        hoursContainer.add(hoursLabel, eventCreationConstraints);
-        SpinnerNumberModel hours = new SpinnerNumberModel(12, 0, 23, 1);
-        hoursSpinner = new JSpinner(hours);
-        hoursContainer.add(hoursSpinner, eventCreationConstraints);
-        container.add(hoursContainer);
-
-        eventCreationConstraints.gridx = 1;
-        eventCreationConstraints.gridy = 0;
-
-        JPanel minutesContainer = new JPanel();
-        minutesContainer.setLayout(new BoxLayout(minutesContainer, BoxLayout.PAGE_AXIS));
-
-        JLabel minutesLabel = new JLabel("<html><h2>Minutes</h2></html>");
-        minutesContainer.add(minutesLabel, eventCreationConstraints);
-
-        SpinnerNumberModel minutes = new SpinnerNumberModel(0, 0, 59, 1);
-        minutesSpinner = new JSpinner(minutes);
-        minutesContainer.add(minutesSpinner, eventCreationConstraints);
-        container.add(minutesContainer);
-        eventCreationConstraints.weighty = 1.0;
-        eventCreationConstraints.weightx = 1.0;
-
-        eventCreationConstraints.gridx = 2;
-        eventCreationConstraints.gridy = 0;
-
-        JPanel summaryContainer = new JPanel();
-        summaryContainer.setLayout(new GridBagLayout());
-        GridBagConstraints summaryContainerConstraints = new GridBagConstraints();
-
-        JLabel summaryLabel = new JLabel("<html><h2>Summary</h2></html>");
-
-        summaryContainerConstraints.gridy = 0;
-        summaryContainerConstraints.gridx = 0;
-
-        summaryContainer.add(summaryLabel, summaryContainerConstraints);
-        summaryContainerConstraints.fill = GridBagConstraints.BOTH;
-        summaryContainerConstraints.gridy = 1;
-        summaryContainerConstraints.gridx = 0;
-        summaryContainerConstraints.weightx = 1.0;
-        summaryContainerConstraints.weighty = 1.0;
-
-
-        TextArea summaryArea = new TextArea(1, 10);
-        summaryContainer.add(summaryArea, summaryContainerConstraints);
-        eventCreationConstraints.fill = GridBagConstraints.BOTH;
-        eventCreationConstraints.weighty = 1.0;
-        eventCreationConstraints.weightx = 1.0;
-
-        container.add(summaryContainer, eventCreationConstraints);
-        eventCreationConstraints.fill = GridBagConstraints.NONE;
-
-
-        JPanel buttonContainer = new JPanel();
-        buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.LINE_AXIS));
-        JButton cancelButton = new JButton("Cancel");
-        buttonContainer.add(cancelButton);
-
-        JButton createButton = new JButton("Create");
-        buttonContainer.add(createButton);
-
-        eventCreationConstraints.gridx = 2;
-        eventCreationConstraints.gridy = 3;
-        eventCreationConstraints.weighty = 0;
-        eventCreationConstraints.weightx = 0;
-        container.add(buttonContainer, eventCreationConstraints);
-
+        LocalDateTime localDateTime;
+        JFrame frame;
+        ActionListener cancelButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        };
         ActionListener createButtonListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Event.DateBuilder startBuild = new Event.DateBuilder(localDateTime);
-                //        startBuild.setHour(getHours());
-                //       startBuild.setMinute(getMinutes());
+                System.out.println("Settting hours to " + getHours());
+                startBuild.setHour(getHours());
+                System.out.println("Setting minutes to " + getMinutes());
+                startBuild.setMinute(getMinutes());
                 DateTime startTime = startBuild.build();
+                System.out.println(startTime.toString());
 
 
                 Event.EventBuilder eventBuild = new Event.EventBuilder();
                 eventBuild.setStartTime(startTime);
-                //      eventBuild.setSummary(getSummary());
+                eventBuild.setSummary(getSummary());
                 eventBuild.setEndTime(startTime);
                 eventBuild.setCalendar(WeekCalendar.getCurrentCalendar());
                 eventBuild.buildEvent();
+                System.out.println(WeekCalendar.getCurrentCalendar().getComponents());
                 frame.dispose();
             }
         };
-        createButton.addActionListener(createButtonListener);
-        frame.add(container);
-        frame.pack();
-        frame.setVisible(true);
+
+        CreateAndAskEvent(LocalDateTime localDateTime) {
+            this.localDateTime = localDateTime;
+            frame = new JFrame("Event Creation");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setPreferredSize(new Dimension(600, 400));
+            JPanel container = new JPanel();
+            container.setLayout(new GridBagLayout());
+            GridBagConstraints eventCreationConstraints = new GridBagConstraints();
+            eventCreationConstraints.fill = GridBagConstraints.NONE;
+            eventCreationConstraints.gridx = 0;
+            eventCreationConstraints.gridy = 0;
+            eventCreationConstraints.weighty = 0;
+            eventCreationConstraints.weightx = 0;
+
+
+            JPanel hoursContainer = new JPanel();
+            hoursContainer.setLayout(new BoxLayout(hoursContainer, BoxLayout.PAGE_AXIS));
+
+            JLabel hoursLabel = new JLabel("<html><h2>Hours</h2></html>");
+            hoursContainer.add(hoursLabel, eventCreationConstraints);
+            SpinnerNumberModel hours = new SpinnerNumberModel(12, 0, 23, 1);
+            hoursSpinner = new JSpinner(hours);
+            hoursContainer.add(hoursSpinner, eventCreationConstraints);
+            container.add(hoursContainer);
+
+            eventCreationConstraints.gridx = 1;
+            eventCreationConstraints.gridy = 0;
+
+            JPanel minutesContainer = new JPanel();
+            minutesContainer.setLayout(new BoxLayout(minutesContainer, BoxLayout.PAGE_AXIS));
+
+            JLabel minutesLabel = new JLabel("<html><h2>Minutes</h2></html>");
+            minutesContainer.add(minutesLabel, eventCreationConstraints);
+
+            SpinnerNumberModel minutes = new SpinnerNumberModel(0, 0, 59, 1);
+            minutesSpinner = new JSpinner(minutes);
+            minutesContainer.add(minutesSpinner, eventCreationConstraints);
+            container.add(minutesContainer);
+            eventCreationConstraints.weighty = 1.0;
+            eventCreationConstraints.weightx = 1.0;
+
+            eventCreationConstraints.gridx = 2;
+            eventCreationConstraints.gridy = 0;
+
+            JPanel summaryContainer = new JPanel();
+            summaryContainer.setLayout(new GridBagLayout());
+            GridBagConstraints summaryContainerConstraints = new GridBagConstraints();
+
+            JLabel summaryLabel = new JLabel("<html><h2>Summary</h2></html>");
+
+            summaryContainerConstraints.gridy = 0;
+            summaryContainerConstraints.gridx = 0;
+
+            summaryContainer.add(summaryLabel, summaryContainerConstraints);
+            summaryContainerConstraints.fill = GridBagConstraints.BOTH;
+            summaryContainerConstraints.gridy = 1;
+            summaryContainerConstraints.gridx = 0;
+            summaryContainerConstraints.weightx = 1.0;
+            summaryContainerConstraints.weighty = 1.0;
+
+
+            summaryArea = new TextArea(1, 10);
+            summaryContainer.add(summaryArea, summaryContainerConstraints);
+            eventCreationConstraints.fill = GridBagConstraints.BOTH;
+            eventCreationConstraints.weighty = 1.0;
+            eventCreationConstraints.weightx = 1.0;
+
+            container.add(summaryContainer, eventCreationConstraints);
+            eventCreationConstraints.fill = GridBagConstraints.NONE;
+
+
+            JPanel buttonContainer = new JPanel();
+            buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.LINE_AXIS));
+            JButton cancelButton = new JButton("Cancel");
+            cancelButton.addActionListener(cancelButtonListener);
+            buttonContainer.add(cancelButton);
+
+            JButton createButton = new JButton("Create");
+            createButton.addActionListener(createButtonListener);
+            buttonContainer.add(createButton);
+
+            eventCreationConstraints.gridx = 2;
+            eventCreationConstraints.gridy = 3;
+            eventCreationConstraints.weighty = 0;
+            eventCreationConstraints.weightx = 0;
+            container.add(buttonContainer, eventCreationConstraints);
+            frame.add(container);
+            frame.pack();
+            frame.setVisible(true);
+        }
+
+        JFrame getFrame() {
+            return this.frame;
+        }
+
+        int getHours() {
+            return (int) hoursSpinner.getValue();
+        }
+
+        int getMinutes() {
+            return (int) minutesSpinner.getValue();
+        }
+
+        String getSummary() {
+            return summaryArea.getText();
+        }
+
     }
 
     static class DayContainer extends JPanel {
@@ -195,21 +230,24 @@ public class GUI {
         ActionListener addEventListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createAndAskEvent(localDateTime);
-//                eventList.addEvent(localDateTime);
-                eventList.clear();
-                eventList.populateEventList(localDateTime);
+                CreateAndAskEvent askEvent = new CreateAndAskEvent(localDateTime);
+                askEvent.getFrame().addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        eventList.clear();
+                        eventList.populateEventList(localDateTime);
+                        super.windowClosed(e);
+                    }
+
+                });
+
             }
         };
         ListSelectionListener checkIfListEmpty = new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    if (eventList.getSelectedIndex() == -1) {
-                        removeEventButton.setEnabled(false);
-                    } else {
-                        removeEventButton.setEnabled(true);
-                    }
+                    removeEventButton.setEnabled(eventList.getSelectedIndex() != -1);
                 }
 
             }
@@ -278,8 +316,4 @@ public class GUI {
             return dayBorder;
         }
     }
-
 }
-
-
-
