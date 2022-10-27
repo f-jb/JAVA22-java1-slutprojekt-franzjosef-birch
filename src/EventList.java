@@ -38,16 +38,14 @@ public class EventList extends JPanel {
         eventListConstraints.weighty = 1.0;
         eventListConstraints.weightx = 1.0;
 
-
         EventRenderer eventRenderer = new EventRenderer();
-
         eventList = new JList<>(listModel);
         eventList.setCellRenderer(eventRenderer);
         eventList.setVisibleRowCount(JList.VERTICAL);
         eventList.setSelectedIndex(0);
         eventList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane eventListScrollPane = new JScrollPane(eventList);
 
+        JScrollPane eventListScrollPane = new JScrollPane(eventList);
         add(eventListScrollPane,eventListConstraints);
     }
     void populateEventList(LocalDateTime ldt){
@@ -59,15 +57,9 @@ public class EventList extends JPanel {
             }
         }
     }
-    void setEventListListener(ListSelectionListener listListener){
-        eventList.addListSelectionListener(listListener);
+    void setEventListListener(ListSelectionListener listListener){ eventList.addListSelectionListener(listListener); }
 
-    }
-
-    void deleteEvent(Property uidToDelete) {
-            Event.deleteByUid(WeekCalendar.getCurrentCalendar(), uidToDelete);
-
-    }
+    void deleteEvent(Property uidToDelete) { Event.deleteByUid(WeekCalendar.getCurrentCalendar(), uidToDelete); }
 
     public void setSelectedIndex(int index) {
         eventList.setSelectedIndex(index);
@@ -77,4 +69,3 @@ public class EventList extends JPanel {
         eventList.ensureIndexIsVisible(index);
     }
 }
-

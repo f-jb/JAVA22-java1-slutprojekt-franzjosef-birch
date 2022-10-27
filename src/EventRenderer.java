@@ -2,7 +2,6 @@ import net.fortuna.ical4j.model.component.VEvent;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Locale;
 
 // https://www.oracle.com/technical-resources/articles/javase/oconner-customlist-gd-aurev.html
 public class EventRenderer extends DefaultListCellRenderer {

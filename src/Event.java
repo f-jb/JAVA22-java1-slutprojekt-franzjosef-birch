@@ -29,11 +29,11 @@ class Event {
             date.set(localDateTime.getYear(), localDateTime.getMonth().getValue() - 1, localDateTime.getDayOfMonth());
         }
 
-        public void setHour(int hour) {
+        void setHour(int hour) {
             this.hour = hour;
         }
 
-        public void setMinute(int minute) {
+        void setMinute(int minute) {
             this.minute = minute;
         }
 
@@ -45,28 +45,24 @@ class Event {
     }
 
     static class EventBuilder {
-        Calendar calendar;
-        String summary;
-        DateTime startTime;
-        DateTime endTime;
+        private Calendar calendar;
+        private String summary;
+        private DateTime startTime;
+        private DateTime endTime;
 
-        public void setEndTime(DateTime endTime) {
+        void setEndTime(DateTime endTime) {
             this.endTime = endTime;
         }
 
-        public void setStartTime(DateTime startTime) {
+        void setStartTime(DateTime startTime) {
             this.startTime = startTime;
         }
 
-        public void setCalendar(Calendar calendar) {
-            this.calendar = calendar;
-        }
+        void setCalendar(Calendar calendar) { this.calendar = calendar; }
 
-
-        public void setSummary(String summary) {
+        void setSummary(String summary) {
             this.summary = summary;
         }
-
 
         void buildEvent() {
             VEvent meeting = new VEvent(startTime, endTime, summary);
@@ -74,7 +70,7 @@ class Event {
             UidGenerator ug = new RandomUidGenerator();
             Uid uid = ug.generateUid();
             meeting.getProperties().add(uid);
-            WeekCalendar.getCurrentCalendar().getComponents().add(meeting);
+            calendar.getComponents().add(meeting);
         }
     }
 
