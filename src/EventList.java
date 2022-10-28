@@ -7,8 +7,8 @@ import java.awt.*;
 import java.time.LocalDateTime;
 
 public class EventList extends JPanel {
-    private final JList eventList;
-    private final DefaultListModel listModel = new DefaultListModel();
+    private final JList<VEvent> eventList;
+    private final DefaultListModel<VEvent> listModel = new DefaultListModel<>();
     int getSelectedIndex(){
         return eventList.getSelectedIndex();
     }
@@ -23,7 +23,7 @@ public class EventList extends JPanel {
     }
 
     Property getEventUid(int index){
-        VEvent vEvent = (VEvent) listModel.get(index);
+        VEvent vEvent = listModel.get(index);
         return vEvent.getUid();
 
     }
@@ -61,11 +61,11 @@ public class EventList extends JPanel {
 
     void deleteEvent(Property uidToDelete) { Event.deleteByUid(WeekCalendar.getCurrentCalendar(), uidToDelete); }
 
-    public void setSelectedIndex(int index) {
+    void setSelectedIndex(int index) {
         eventList.setSelectedIndex(index);
     }
 
-    public void ensureIndexIsVisible(int index) {
+    void ensureIndexIsVisible(int index) {
         eventList.ensureIndexIsVisible(index);
     }
 }
